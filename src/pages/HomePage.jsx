@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import './HomePage.css';
 
-const numeroTavoli = 6;
+const numeroTavoli = 10;
 const tavoli = Array.from({ length: numeroTavoli }, (_, i) => i + 1);
 
 export default function HomePage() {
