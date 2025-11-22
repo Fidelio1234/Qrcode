@@ -29,49 +29,6 @@ export default function OperatorePage() {
 
 
 
-  // ✅ USE CALLBACK PER LE FUNZIONI
-  /*const caricaOrdini = useCallback(() => {
-    fetch('https://qrcode-finale.onrender.com/api/ordini')
-      .then(res => {
-        if (!res.ok) throw new Error('Error loading orders');
-        return res.json();
-      })
-      .then(data => {
-        console.log('📋 Active orders loaded:', data.length);
-        setOrdini(data);
-      })
-      .catch(err => {
-        console.error('❌ Error loading orders:', err);
-        setOrdini([]);
-      });
-  }, []);
-
-  const caricaOrdiniCompleti = useCallback(() => {
-    fetch('https://qrcode-finale.onrender.com/api/ordini/completo')
-      .then(res => {
-        if (!res.ok) throw new Error('Error loading complete orders');
-        return res.json();
-      })
-      .then(data => {
-        console.log('📋 Complete orders loaded:', data.length);
-        
-        // ✅ ORDINA GLI ORDINI: I PIÙ RECENTI PRIMA
-        const ordiniOrdinati = data.sort((a, b) => {
-          const dataA = new Date(a.timestamp || a.chiusoIl || a.dataOra);
-          const dataB = new Date(b.timestamp || b.chiusoIl || b.dataOra);
-          return dataB - dataA; // Dal più recente al più vecchio
-        });
-        
-        setOrdini(ordiniOrdinati);
-      })
-      .catch(err => {
-        console.error('❌ Error loading complete orders:', err);
-        setOrdini([]);
-      });
-  }, []);
-
-*/
-
 
 
 
@@ -212,7 +169,7 @@ const caricaOrdiniCompleti = useCallback(() => {
 
 
 // Aggiungi questa funzione al componente OperatorePage
-const stampaTotaleTavolo = useCallback(async () => {
+/*const stampaTotaleTavolo = useCallback(async () => {
   if (!tavoloCorrente) {
     alert('Seleziona un tavolo per stampare il totale');
     return;
@@ -238,26 +195,68 @@ const stampaTotaleTavolo = useCallback(async () => {
 }, [tavoloCorrente]);
 
 
-// ✅ USE EFFECT CORRETTO
-  /*useEffect(() => {
-    if (isAreaOperatore) {
-      caricaOrdiniCompleti();
-    } else {
-      caricaOrdini();
+*/
+// ✅ FUNZIONE STAMPA TOTALE - VERSIONE ALTERNATIVA (se l'endpoint non esiste)
+const stampaTotaleTavolo = useCallback(async () => {
+  if (!tavoloCorrente) {
+    alert('Seleziona un tavolo per stampare il totale');
+    return;
+  }
+
+  try {
+    console.log(`🖨️ Richiesta stampa totale tavolo ${tavoloCorrente}...`);
+    
+    // 1. Recupera gli ordini del tavolo
+    const response = await fetch(`https://qrcode-finale.onrender.com/api/ordini/tavolo/${tavoloCorrente}`);
+    const ordiniTavolo = await response.json();
+    
+    if (!ordiniTavolo || ordiniTavolo.length === 0) {
+      alert(`Nessun ordine trovato per il tavolo ${tavoloCorrente}`);
+      return;
     }
     
-    const interval = setInterval(() => {
-      if (isAreaOperatore) {
-        caricaOrdiniCompleti();
-      } else {
-        caricaOrdini();
-      }
-    }, 10000);
+    // 2. Calcola il totale
+    const totale = ordiniTavolo.reduce((tot, ord) => tot + ord.ordinazione.reduce((sum, item) => 
+      sum + (item.prezzo * item.quantità), 0), 0);
     
-    return () => clearInterval(interval);
-  }, [isAreaOperatore, caricaOrdini, caricaOrdiniCompleti]);
-
-*/
+    console.log('📊 Dati calcolati:', {
+      tavolo: tavoloCorrente,
+      ordini: ordiniTavolo.length,
+      totale: totale
+    });
+    
+    // 3. Invia alla stampante LOCALE
+    const stampaResponse = await fetch('http://localhost:3002/api/stampa-conto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ordini: ordiniTavolo,
+        tavolo: tavoloCorrente,
+        totale: totale
+      })
+    });
+    
+    const stampaResult = await stampaResponse.json();
+    
+    if (stampaResult.success) {
+      console.log('✅ Totale stampato con successo!');
+      setMessaggioSuccesso(`✅ Totale tavolo ${tavoloCorrente} stampato! Importo: € ${totale.toFixed(2)}`);
+    } else {
+      throw new Error(stampaResult.error || 'Errore durante la stampa');
+    }
+    
+  } catch (error) {
+    console.error('❌ Errore stampa totale:', error);
+    
+    if (error.message.includes('Failed to fetch') || error.message.includes('ECONNREFUSED')) {
+      alert('❌ Stampante non disponibile. Controlla che il servizio di stampa locale sia in esecuzione sulla porta 3002.');
+    } else {
+      alert('❌ Errore stampa totale: ' + error.message);
+    }
+  }
+}, [tavoloCorrente]);
 
 
 
@@ -626,3 +625,5 @@ useEffect(() => {
     </div>
   );
 }
+
+

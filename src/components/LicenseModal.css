@@ -296,3 +296,105 @@
     flex-direction: column;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* LicenseModal.css - AGGIUNGI QUESTE REGOLE */
+
+.license-modal.expired {
+  border-left: 5px solid #e74c3c;
+}
+
+.license-modal.expiring {
+  border-left: 5px solid #f39c12;
+}
+
+.license-message.expired {
+  background: #ffeaea;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e74c3c;
+  margin-bottom: 15px;
+}
+
+.license-message.expiring {
+  background: #fff4e6;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #f39c12;
+  margin-bottom: 15px;
+}
+
+.note {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.status-valid {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.status-invalid {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.days-warning {
+  color: #e67e22;
+  font-weight: bold;
+}
+
+.days-normal {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.license-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.license-info p {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.license-info strong {
+  min-width: 140px;
+}
+
+.btn-support {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-support:hover {
+  background: linear-gradient(135deg, #2980b9, #1f618d);
+  transform: translateY(-2px);
+}

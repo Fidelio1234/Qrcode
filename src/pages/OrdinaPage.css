@@ -82,11 +82,11 @@
   right: -2px;
   background: #ff4444;
   color: white;
-  font-size: 0.75rem;
+  font-size: 0.99rem;
   font-weight: bold;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  min-width: 27px;
+  height: 27px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,25 +158,6 @@
   font-size: 1rem;
 }
 
-/* 🔹 Badge quantità prodotti MOBILE */
-.quantita-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: linear-gradient(135deg, #2196f3, #1976d2);
-  color: white;
-  border-radius: 12px;
-  min-width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: bold;
-  box-shadow: 0 3px 10px rgba(33, 150, 243, 0.4);
-  border: 2px solid white;
-  z-index: 2;
-}
 
 .card.selected {
   background: linear-gradient(135deg, #4caf50, #45a049);
@@ -512,23 +493,7 @@
   position: relative; /* Importante per posizionare il badge */
 }
 
-.quantita-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ff4444;
-  color: white;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  animation: pop 0.3s ease;
-}
+
 
 /* ✅ ANIMAZIONE PER QUANDO AGGIUNGI UN PRODOTTO */
 @keyframes pop {
@@ -544,13 +509,13 @@
   right: -6px;
   background: linear-gradient(135deg, #6593e2, #6593e2);
   color: white;
-  border-radius: 12px;
-  min-width: 24px;
-  height: 24px;
+  border-radius: 15px;
+  min-width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(255, 107, 107, 0.5);
   border: 2px solid white;
